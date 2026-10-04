@@ -1,0 +1,7 @@
+@import 'tailwindcss';
+@source "../../templates";
+@source "../../**/templates";
+
+@theme {
+--font-roboto-slab: "Roboto Slab", serif;
+}

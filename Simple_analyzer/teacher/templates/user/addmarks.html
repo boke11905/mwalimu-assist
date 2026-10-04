@@ -1,0 +1,134 @@
+{% extends "user/base.html" %}
+
+{% block title %}Record Marks{% endblock %}
+
+{% block body %}
+<div class="min-h-screen bg-gray-50 p-6 sm:p-10 font-sans">
+    
+    
+    <div class="max-w-5xl mx-auto space-y-6">
+        
+        
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+                <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">
+                    Record Marks
+                </h1>
+                <p class="text-gray-500 mt-1 text-sm">Select the subject and term, then enter the student scores.</p>
+            </div>
+            
+            <button type="button" onclick="history.back()" class="self-start sm:self-auto text-gray-500 hover:text-gray-800 font-semibold text-sm transition flex items-center gap-2">
+                &larr; Cancel & Go Back
+            </button>
+        </div>
+
+        
+        <form method="POST" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
+            {% csrf_token %}
+            
+            
+            <div class="p-6 border-b border-gray-100 bg-gray-50/50 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                
+                
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Subject</label>
+                    <div class="relative">
+                        <select name="subject_id" required class="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5 appearance-none cursor-pointer shadow-sm">
+                            <option value="" disabled selected>Select Subject...</option>
+                            {% for subject in subjects %}
+                                <option value="{{subject.id}}">{{subject.subject_name}}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="pointer-events-none absolute right-3 top-[50%] -translate-y-1/2 text-gray-500">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Term</label>
+                    <div class="relative">
+                        <select name="exam_term" required class="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5 appearance-none cursor-pointer shadow-sm">
+                            <option value="" disabled selected>Select Term...</option>
+                            {% for value, label in exam_terms %}
+                                <option value="{{value}}">{{label}}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="pointer-events-none absolute right-3 top-[50%] -translate-y-1/2 text-gray-500">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-white text-gray-500 text-xs uppercase tracking-wider border-b border-gray-100">
+                        <tr>
+                            <th class="px-6 py-4 font-semibold w-1/4">Admission No.</th>
+                            <th class="px-6 py-4 font-semibold w-1/4">First Name</th>
+                            <th class="px-6 py-4 font-semibold w-1/4">Last Name</th>
+                            <th class="px-6 py-4 font-semibold text-right w-1/4">Score (0-100)</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody class="divide-y divide-gray-100 bg-white">
+                        {% for student in students %}
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="px-6 py-3 text-sm font-medium text-gray-900">
+                                {{ student.Admission_number }}
+                            </td>
+                            <td class="px-6 py-3 text-sm text-gray-600 capitalize">
+                                {{ student.first_name }}
+                            </td>
+                            <td class="px-6 py-3 text-sm text-gray-600 capitalize">
+                                {{ student.last_name }}
+                            </td>
+                            
+                            <td class="px-6 py-3 text-right">
+                                <input type="number" name="mark_{{student.id}}" min="0" max="100" class="w-24 text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm font-bold rounded-lg focus:ring-green-500 focus:border-green-500 p-2 shadow-inner" placeholder="--">
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            
+            <div class="p-6 border-t border-gray-100 bg-gray-50/50 flex justify-end">
+                <button type="submit" class="w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white text-lg font-bold py-3 px-10 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
+                    Save Marks
+                </button>
+            </div>
+            
+        </form>
+
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const inputs = Array.from(document.querySelectorAll("tbody input:not([type='hidden'])"));
+
+        inputs.forEach(function(input, index) {
+            input.addEventListener("keydown", function(event) {
+                if (event.key === "Enter") {
+                    event.preventDefault(); 
+                    
+                    const nextInput = inputs[index + 1];
+                    if (nextInput) {
+                        nextInput.focus();
+                    } else {
+                        const submitBtn = document.querySelector("button[type='submit'], input[type='submit']");
+                        if (submitBtn) submitBtn.focus();
+                    }
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

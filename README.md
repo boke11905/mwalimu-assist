@@ -3,6 +3,7 @@ a web app that simplifies the recording and calculation of student results
 
 ## prerequisties
  1.python 3 +
+
  2.pip 
 
 ## installation 
@@ -14,7 +15,9 @@ pip install -r requirements.txt
 cd Simple_analyzer
 ## run
 python manage.py migrate
+
 python manage.py createsuperuser
+
 python manage.py runserver
 
 login in using the your credentials 

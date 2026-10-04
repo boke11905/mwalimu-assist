@@ -1,0 +1,36 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    
+}
+
+.form{
+    border: 2px solid black;
+    padding: 50px;
+    margin:20px;
+    border-radius: 4.5px;
+    
+}
+.form .form-label{
+    font-size: 18px;
+    font-weight: 500;
+}
+.form .btn-primary{
+    margin-left:18px;
+    width: 70%;
+    margin-top: 20px;
+    background-color: #00A86B;
+    font-size: 15px;
+    font-weight: 600;
+    
+}

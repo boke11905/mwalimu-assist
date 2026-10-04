@@ -1,0 +1,111 @@
+{% extends 'user/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Add Student{% endblock %}
+
+{% block body %}
+
+<div class="min-h-[85vh] flex items-center justify-center bg-gray-50 p-4 font-sans">
+    
+    
+    <div class="w-full max-w-xl bg-white rounded-xl shadow-md border border-gray-100 p-6">
+        
+        
+        <div class="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
+            <h1 class="text-xl font-bold text-gray-900 tracking-tight">
+                Add Student
+            </h1>
+            <button type="button" onclick="history.back()" class="text-gray-500 hover:text-gray-800 text-sm font-semibold flex items-center gap-1">
+                &larr; Cancel
+            </button>
+        </div>
+
+        
+        <form method="POST" novalidate>
+            {% csrf_token %}
+            
+            
+            <div class="grid grid-cols-2 gap-x-4 gap-y-1">
+                
+                <div class="text-sm">
+                    {{ form.Admission_number|as_crispy_field }}
+                </div>
+                <div class="text-sm">
+                    {{ form.gender|as_crispy_field }}
+                </div>
+                <div class="text-sm">
+                    {{ form.first_name|as_crispy_field }}
+                </div>
+                <div class="text-sm">
+                    {{ form.last_name|as_crispy_field }}
+                </div>
+            </div>
+
+            
+            <div class="text-sm mt-2">
+                
+                {{ form.subjects|as_crispy_field }} 
+            </div>
+            
+            
+            <div class="pt-3 mt-2 border-t border-gray-100 flex justify-end">
+                <button type="submit" class="bg-green-500 hover:bg-green-600 text-white text-sm font-bold py-2 px-8 rounded-lg shadow-sm transition-all">
+                    Save Student
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<style>
+    /* 1. HIDE the floating SVG arrow completely */
+    .bg-white form select ~ svg,
+    .bg-white form select ~ div svg,
+    .bg-white form .relative svg {
+        display: none !important;
+    }
+
+    
+    .bg-white form select:not([multiple]) {
+        -webkit-appearance: none !important;
+        -moz-appearance: none !important;
+        appearance: none !important;
+        
+        
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e") !important;
+        background-position: right 0.5rem center !important;
+        background-repeat: no-repeat !important;
+        background-size: 1.5em 1.5em !important;
+        padding-right: 2.5rem !important; 
+        
+        height: 38px !important;
+        padding-top: 4px !important;
+        padding-bottom: 4px !important;
+        font-size: 0.875rem !important;
+    }
+
+    
+    .bg-white form input {
+        height: 38px !important;
+        padding-top: 4px !important;
+        padding-bottom: 4px !important;
+        font-size: 0.875rem !important;
+    }
+    
+    
+    .bg-white form select[multiple] {
+        height: 120px !important;
+        font-size: 0.875rem !important;
+        background-image: none !important; 
+    }
+    
+    
+    .bg-white form .mb-3 {
+        margin-bottom: 0.5rem !important;
+    }
+    .bg-white form label {
+        font-size: 0.875rem !important;
+        margin-bottom: 0.25rem !important;
+    }
+</style>
+
+{% endblock %}

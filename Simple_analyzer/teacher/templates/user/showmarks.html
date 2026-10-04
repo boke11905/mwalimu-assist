@@ -1,0 +1,85 @@
+{% extends "user/base.html" %}
+
+{% block title %}View Marks{% endblock %}
+
+{% block body %}
+<div class="min-h-screen bg-gray-50 p-6 sm:p-10 font-sans">
+    
+    
+    <div class="max-w-5xl mx-auto space-y-6">
+        
+        
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+                <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">
+                    Exam Results
+                </h1>
+                <p class="text-gray-500 mt-1 text-sm">Detailed view of student scores for the selected term.</p>
+            </div>
+            
+            <button type="button" onclick="history.back()" class="self-start sm:self-auto bg-white border-2 border-gray-200 text-gray-700 hover:border-gray-300 hover:bg-gray-50 text-sm font-semibold py-2 px-4 rounded-lg transition duration-200 flex items-center gap-2">
+                &larr; Go Back
+            </button>
+        </div>
+
+        
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    
+                    
+                    <thead class="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider border-b border-gray-100">
+                        <tr>
+                            <th class="px-6 py-4 font-semibold">Admission No.</th>
+                            <th class="px-6 py-4 font-semibold">Student Name</th>
+                            <th class="px-6 py-4 font-semibold">Term</th>
+                            
+                            <th class="px-6 py-4 font-semibold text-right">Score</th>
+                        </tr>
+                    </thead>
+                    
+                    
+                    <tbody class="divide-y divide-gray-100">
+                        {% for result in results %}
+                            {% if result %}
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900 uppercase">
+                                    {{ result.student.Admission_number }}
+                                </td>
+                                
+                                <td class="px-6 py-4 text-sm text-gray-600 capitalize">
+                                    {{ result.student.first_name }} {{ result.student.last_name }}
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-600 capitalize">
+                                    {{ result.exam_term }}
+                                </td>
+                                <td class="px-6 py-4 text-sm font-bold text-gray-900 text-right">
+                                    {{ result.score }}
+                                </td>
+                            </tr>
+                            {% endif %}
+                        {% empty %}
+                            
+                            <tr>
+                                <td colspan="4" class="px-6 py-10 text-center text-gray-500">
+                                    No marks found for this selection.
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="flex justify-end pt-2">
+             <button onclick="window.print()" class="bg-gray-800 hover:bg-gray-900 text-white text-sm font-bold py-2.5 px-6 rounded-xl shadow-sm transition-all duration-200">
+                Print Results
+            </button>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

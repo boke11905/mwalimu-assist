@@ -1,0 +1,93 @@
+{% extends "user/base.html" %}
+
+{% block title %}Students{% endblock %}
+
+{% block body %}
+<div class="min-h-screen bg-gray-50 p-6 sm:p-10 font-sans">
+    
+    
+    <div class="max-w-5xl mx-auto space-y-6">
+        
+        
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight uppercase">
+                    Grade: {{stream.grade}} <span class="text-green-600">{{stream.stream_name}}</span>
+                </h1>
+                <p class="text-gray-500 mt-1 text-lg">Class members and details</p>
+            </div>
+            
+            <a href="{% url 'dashboard' %}" class="self-start sm:self-auto">
+                <button class="bg-white border-2 border-gray-200 text-gray-700 hover:border-gray-300 hover:bg-gray-50 text-sm font-semibold py-2 px-4 rounded-lg transition duration-200 flex items-center gap-2">
+                    &larr; Back to Dashboard
+                </button>
+            </a>
+        </div>
+
+        
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            
+            
+            <div class="p-6 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4 bg-white">
+                <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2">
+                    Total Students 
+                    <span class="bg-green-100 text-green-800 text-sm font-bold px-3 py-1 rounded-full">
+                        {{total_students}}
+                    </span>
+                </h3>
+                
+                <form method="POST">
+                    {% csrf_token %}
+                    <button type="submit" value="{{stream.id}}" name="stream" class="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold py-2 px-6 rounded-lg shadow-sm transition duration-200">
+                        + Add Student
+                    </button>
+                </form>
+            </div>
+
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    
+                    <thead class="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider">
+                        <tr>
+                            <th class="px-6 py-4 font-semibold">Admission No.</th>
+                            <th class="px-6 py-4 font-semibold">First Name</th>
+                            <th class="px-6 py-4 font-semibold">Last Name</th>
+                            <th class="px-6 py-4 font-semibold">Gender</th>
+                        </tr>
+                    </thead>
+                    
+                    
+                    <tbody class="divide-y divide-gray-100">
+                        {% for learner in learners %}
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="px-6 py-4 text-sm font-medium text-gray-900">
+                                {{learner.Admission_number}}
+                            </td>
+                            
+                            <td class="px-6 py-4 text-sm text-gray-600 capitalize">
+                                {{learner.first_name}}
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-600 capitalize">
+                                {{learner.last_name}}
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-600">
+                                {{learner.gender}}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            
+            {% if not learners %}
+            <div class="p-10 text-center text-gray-500">
+                No students have been added to this stream yet.
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

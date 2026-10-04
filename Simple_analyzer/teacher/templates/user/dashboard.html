@@ -1,0 +1,96 @@
+{% extends "user/base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+<div class="min-h-screen bg-gray-50 p-6 sm:p-10 font-sans">
+    
+    <div class="max-w-6xl mx-auto space-y-8">
+        
+        <header>
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight">
+                Welcome back, <span class="text-green-600 capitalize">{{ request.user }}</span>!
+            </h1>
+           
+        </header>
+
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition-shadow">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-1">Class Roster</h3>
+                    <p class="text-gray-500 text-sm mb-5">Select a stream to see all your students.</p>
+                </div>
+                <form method="POST" class="flex gap-2">
+                    {% csrf_token %}
+                    <select name="stream" class="grow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2">
+                        {% for stream in streams %}
+                            <option value="{{stream.id}}">{{stream.stream_name}} - Grade: {{stream.grade}}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <button type="submit" class="bg-gray-800 hover:bg-gray-900 text-white text-sm font-semibold py-2 px-4 rounded-lg transition duration-200">
+                        View
+                    </button>
+                </form>
+            </div>
+
+            
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition-shadow">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-1">Record Marks</h3>
+                    <p class="text-gray-500 text-sm mb-5">Add marks manually or using speech recognition.</p>
+                </div>
+                
+                <a href="{% url 'select_stream' %}" class="self-start">
+                    
+                    <button class="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold py-2 px-6 rounded-lg shadow-sm transition duration-200">
+                        Add Marks
+                    </button>
+                </a>
+            </div>
+
+            
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition-shadow">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-1">View Records</h3>
+                    <p class="text-gray-500 text-sm mb-5">Review previously entered marks for your classes.</p>
+                </div>
+                <a href="{% url 'viewmarks' %}" class="self-start">
+                    <button class="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold py-2 px-6 rounded-lg shadow-sm transition duration-200">
+                        View Marks
+                    </button>
+                </a>
+            </div>
+
+            
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition-shadow">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-1">Generate Reports</h3>
+                    <p class="text-gray-500 text-sm mb-5">Compile and generate student reports with one click.</p>
+                </div>
+                <a href="{% url 'generate_view' %}" class="self-start">
+                    <button class="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold py-2 px-6 rounded-lg shadow-sm transition duration-200">
+                        Generate Report
+                    </button>
+                </a>
+            </div>
+
+            
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition-shadow">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-1">Analytics</h3>
+                    <p class="text-gray-500 text-sm mb-5">View detailed performance analysis and statistics.</p>
+                </div>
+            
+                <button class="self-start bg-white border-2 border-gray-200 text-gray-700 hover:border-green-500 hover:text-green-600 text-sm font-semibold py-1.5 px-6 rounded-lg transition duration-200">
+                    View Analysis
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

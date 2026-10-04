@@ -1,0 +1,39 @@
+{%extends "user/base.html"%}
+{%load static %}
+{%load crispy_forms_tags%}
+
+{%block title%}signup page{%endblock%}
+        {%block link%}
+        <link rel="stylesheet" href="{% static 'css/output.css' %}">
+       
+    {%endblock%}
+   {% block body %}
+<div class="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+    
+    
+    <div class="w-full max-w-3xl bg-white rounded-xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Sign Up</h2>
+
+        <form method="POST" novalidate>
+            {% csrf_token %}
+            
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {% for field in form %}
+                    
+                    <div class="{% if field.name == 'username' %}md:col-span-2{% endif %} w-full">
+                        {{ field | as_crispy_field }}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="mt-8">
+                <button type="submit" class="w-90 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200">
+                    Create Account
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+    
